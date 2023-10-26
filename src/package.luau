@@ -1,16 +1,26 @@
 -- Helper table for requiring packages from various sources
 
 local root = script.Parent
-local packageDirs = {"Packages","External/StudioBuiltins"}
+local packageDirs = {"Packages","External/StudioBuiltins","External/MiscCorePackages"}
+local nameOverrides = {
+    Roact = "roact-compat",
+    RoactProxy = "roact-compat"
+}
+
 function fetchPackageModule(name)
     for _, dirString in ipairs(packageDirs) do
         local dir = root
         local dirs = string.split(dirString,"/")
+
         for _, childDir in ipairs(dirs) do
             dir = dir[childDir]
         end
-        local foundPkg = dir:FindFirstChild(name)
+        if nameOverrides[name] then
+            name = nameOverrides[name]
+        end
 
+        local foundPkg = dir:FindFirstChild(name)
+    
         if foundPkg then
             return foundPkg
         end
@@ -26,4 +36,5 @@ return setmetatable({},
         else
             error(`Package ${name} does not exist!`)
         end
-    end})
+    end
+})
