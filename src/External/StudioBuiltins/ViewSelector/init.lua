@@ -76,7 +76,7 @@ function ViewSelector.init()
 	viewport.CurrentCamera = viewportCamera
 
 	local localizationTable = script.Parent.LocalizedStrings
-	--local translator = localizationTable:GetTranslator(StudioService.StudioLocaleId) Use game locale instead of studio locale
+	local translator = localizationTable:GetTranslator("en-us")
 	local fallbackTranslator = localizationTable:GetTranslator("en-us")
 	local children = model:GetChildren()
 	for i = 1, #children do
